@@ -1,0 +1,6 @@
+alert_banner_collapsible:
+  js:
+    js/alert_banner_collapsible.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

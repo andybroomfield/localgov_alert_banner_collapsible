@@ -1,0 +1,7 @@
+name: 'Localgov alert banner collapsible'
+type: module
+description: 'Collapsible alert banner'
+package: LocalGov Drupal
+core_version_requirement: ^10 || ^11
+dependencies:
+  - localgov_alert_banner:localgov_alert_banner
