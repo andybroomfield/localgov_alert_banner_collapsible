@@ -104,30 +104,37 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
 
     $build['#attached']['library'][] = 'localgov_alert_banner_collapsible/alert_banner_collapsible';
 
+    $closed_label = $this->configuration['closed_label'] ?? self::INITIAL_CLOSED_LABEL;
+    $open_label = $this->configuration['open_label'] ?? self::INITIAL_OPEN_LABEL;
+    $build['#closed_label'] = $closed_label;
+    $build['#open_label'] = $open_label;
+
     $build['#control'] = [
       '#type' => 'html_tag',
       '#tag' => 'button',
-      '#value' => $this->configuration['open_label'] ?? self::INITIAL_OPEN_LABEL,
+      '#value' => $open_label,
       '#attributes' => [
         'class' => [
           'js-alert-banner-pane-button',
         ],
         'aria-expanded' => 'true',
         'aria-controls' => $html_id . '--contents',
-        'data-closed-label' => $this->configuration['closed_label'] ?? self::INITIAL_CLOSED_LABEL,
-        'data-open-label' => $this->configuration['open_label'] ?? self::INITIAL_OPEN_LABEL,
+        'data-closed-label' => $closed_label,
+        'data-open-label' => $open_label,
       ],
     ];
 
     // Render the alert banners.
     $banner_titles = [];
     foreach ($published_alert_banners as $alert_banner) {
-      $build['#alert_banners'][] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
+      $build['#banners'][] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
         ->view($alert_banner);
       $banner_titles[] = $alert_banner->label();
     }
 
-    $build['#alert_banner_count'] = count($published_alert_banners);
+    $build['#count'] = count($published_alert_banners);
+    $build['#published_alert_banners'] = $published_alert_banners;
+    $build['#banner_titles'] = $banner_titles;
     
     if (count($banner_titles) === 1) {
       $build['#summary'] = reset($banner_titles);

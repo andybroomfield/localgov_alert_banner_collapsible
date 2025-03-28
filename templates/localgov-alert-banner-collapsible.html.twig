@@ -4,7 +4,15 @@
  * Default theme implementation to display localgov_alert_banner_collapsible.
  *
  * Available variables:
- * - foo: Foo variable description.
+ * - control: Collapsible alert banner control button.
+ * - banners: Rendered alert banners.
+ * - html_id: Helper html ID prefix.
+ * - count: Number of alert banners being displayed.
+ * - summary: Summary of alert banners.
+ * - closed_label: Label to use when the collapsible pane is closed.
+ * - open_label: Label to use when the collapsible pane is open.
+ * - published_alert_banners: Array of alert banner entities.
+ * - banner_titles: Array of alert banner titles.
  *
  * @see template_preprocess_localgov_alert_banner_collapsible()
  *
@@ -12,10 +20,10 @@
  */
 #}
 <div class="localgov-alert-banner-collapsible-pane js-alert-banner-pane" id="{{ html_id }}">
-  <span>{{ alert_banner_count }} notifications: </span>
+  <span>{{ count }} notifications: </span>
   <span>{{ summary }}</span>
   {{ control }}
   <div class="localgov-alert-banner-collapsible-pane--content js-alert-banner-pane-content" id="{{ html_id }}--contents">
-    {{ alert_banners }}
+    {{ banners }}
   </div>
 </div>
