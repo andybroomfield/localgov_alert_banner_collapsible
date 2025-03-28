@@ -1,0 +1,12 @@
+{
+    "name": "localgovdrupal/localgov_alert_banner_collapsible",
+    "type": "drupal-module",
+    "description": "LocalGovDrupal distribution: Collapsible alert banner.",
+    "homepage": "https://github.com/localgovdrupal/localgov_alert_banner_collapsible",
+    "minimum-stability": "dev",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "localgovdrupal/localgov_alert_banner": "^1.8",
+        "drupal/core": "^10.0 || ^11.0"
+    }
+}
