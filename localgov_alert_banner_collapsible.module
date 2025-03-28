@@ -4,3 +4,20 @@
  * @file
  * Primary module hooks for Localgov alert banner collapsible module.
  */
+
+/**
+ * Implements hook_theme().
+ */
+function localgov_alert_banner_collapsible_theme(): array {
+  return [
+    'localgov_alert_banner_collapsible' => [
+      'variables' => [
+        'control' => NULL,
+        'alert_banners' => NULL,
+        'html_id' => NULL,
+        'alert_banner_count' => NULL,
+        'summary' => NULL,
+      ],
+    ],
+  ];
+}

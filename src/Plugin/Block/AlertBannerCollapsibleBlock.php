@@ -96,24 +96,15 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
     }
 
     // Render the alert banner.
-    $build = [];
+    $build['#theme'] = 'localgov_alert_banner_collapsible';
 
     // Get the collapsible section.
     $html_id = Html::getUniqueId('localgov-alert-banner-collapsible');
-    $collapsible_build = [];
+    $build['#html_id'] = $html_id;
 
-    $collapsible_build['#attached']['library'][] = 'localgov_alert_banner_collapsible/alert_banner_collapsible';
+    $build['#attached']['library'][] = 'localgov_alert_banner_collapsible/alert_banner_collapsible';
 
-    $collapsible_build['pane'] = [
-      '#type' => 'container',
-      '#attributes' => [
-        'class' => [
-          'js-alert-banner-pane',
-        ],
-        'id' => $html_id,
-      ],
-    ];
-    $collapsible_build['pane']['heading'] = [
+    $build['#control'] = [
       '#type' => 'html_tag',
       '#tag' => 'button',
       '#value' => $this->configuration['open_label'] ?? self::INITIAL_OPEN_LABEL,
@@ -127,23 +118,30 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
         'data-open-label' => $this->configuration['open_label'] ?? self::INITIAL_OPEN_LABEL,
       ],
     ];
-    $collapsible_build['pane']['contents'] = [
-      '#type' => 'container',
-      '#attributes' => [
-        'class' => [
-          'js-alert-banner-pane-content',
-        ],
-        'id' => $html_id . '--contents',
-      ],
-    ];
 
-    // Render the alert banner.
+    // Render the alert banners.
+    $banner_titles = [];
     foreach ($published_alert_banners as $alert_banner) {
-      $collapsible_build['pane']['contents'][] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
+      $build['#alert_banners'][] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
         ->view($alert_banner);
+      $banner_titles[] = $alert_banner->label();
     }
 
-    $build[] = $collapsible_build;
+    $build['#alert_banner_count'] = count($published_alert_banners);
+    
+    if (count($banner_titles) === 1) {
+      $build['#summary'] = reset($banner_titles);
+    }
+    elseif (count($banner_titles) === 2) {
+      $build['#summary'] = reset($banner_titles) . ' and ' . end($banner_titles);
+    }
+    elseif (count($banner_titles) <= 3) {
+      $build['#summary'] = implode(', ', array_slice($banner_titles, 0, -1)) . ' and ' . end($banner_titles);
+    }
+    else {
+      $build['#summary'] = implode(', ', array_slice($banner_titles, 0, 2)) . ' and ' . count(array_slice($banner_titles, 2)) . ' more';
+    }
+
     return $build;
   }
 

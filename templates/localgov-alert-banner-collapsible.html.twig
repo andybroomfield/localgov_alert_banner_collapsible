@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display localgov_alert_banner_collapsible.
+ *
+ * Available variables:
+ * - foo: Foo variable description.
+ *
+ * @see template_preprocess_localgov_alert_banner_collapsible()
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="localgov-alert-banner-collapsible-pane js-alert-banner-pane" id="{{ html_id }}">
+  <span>{{ alert_banner_count }} notifications: </span>
+  <span>{{ summary }}</span>
+  {{ control }}
+  <div class="localgov-alert-banner-collapsible-pane--content js-alert-banner-pane-content" id="{{ html_id }}--contents">
+    {{ alert_banners }}
+  </div>
+</div>
