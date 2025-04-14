@@ -5,7 +5,8 @@ Adds a new collapsiple alert banner block so that alert banners can be collapsed
 ## Cavets
 
 This is an experimental module.
-Currently this won't support the banners that need to be peristant (where remove hide button is selected). To support those banners, a different alert banner type should be created and those banners should be displayed with the default alert banner block.
+Alert banners where the field 'remove_hide_link' is set will be displayed in a persistent alerts section above the collapsible block.
+This currently won't set the hide-alert-banner-token cookie, and has no means of determining if a user has already seen an alert banner.
 
 ## Dependencies
 

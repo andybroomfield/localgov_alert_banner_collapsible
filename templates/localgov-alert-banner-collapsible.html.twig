@@ -6,6 +6,7 @@
  * Available variables:
  * - control: Collapsible alert banner control button.
  * - banners: Rendered alert banners.
+ * - persistent_banners: Alert banners that should always be displayed.
  * - html_id: Helper html ID prefix.
  * - count: Number of alert banners being displayed.
  * - summary: Summary of alert banners.
@@ -19,11 +20,18 @@
  * @ingroup themeable
  */
 #}
-<div class="localgov-alert-banner-collapsible-pane js-alert-banner-pane" id="{{ html_id }}">
-  <span>{{ count }} notifications: </span>
-  <span>{{ summary }}</span>
-  {{ control }}
-  <div class="localgov-alert-banner-collapsible-pane--content js-alert-banner-pane-content" id="{{ html_id }}--contents">
-    {{ banners }}
+{% if persistent_banners %}
+  <div class="localgov-alert-banner-peristant-banners">
+    {{ persistent_banners }}
   </div>
-</div>
+{% endif %}
+{% if banners %}
+  <div class="localgov-alert-banner-collapsible-pane js-alert-banner-pane" id="{{ html_id }}">
+    <span>{{ count }} notifications: </span>
+    <span>{{ summary }}</span>
+    {{ control }}
+    <div class="localgov-alert-banner-collapsible-pane--content js-alert-banner-pane-content" id="{{ html_id }}--contents">
+      {{ banners }}
+    </div>
+  </div>
+{% endif %}
