@@ -102,13 +102,16 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
     $html_id = Html::getUniqueId('localgov-alert-banner-collapsible');
     $build['#html_id'] = $html_id;
 
+    // Library.
     $build['#attached']['library'][] = 'localgov_alert_banner_collapsible/alert_banner_collapsible';
 
+    // Closed and open labels.
     $closed_label = $this->configuration['closed_label'] ?? self::INITIAL_CLOSED_LABEL;
     $open_label = $this->configuration['open_label'] ?? self::INITIAL_OPEN_LABEL;
     $build['#closed_label'] = $closed_label;
     $build['#open_label'] = $open_label;
 
+    // Control button.
     $build['#control'] = [
       '#type' => 'html_tag',
       '#tag' => 'button',
@@ -126,16 +129,34 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
 
     // Render the alert banners.
     $banner_titles = [];
+    $build['#persistent_banners'] = [];
+    $build['#banners'] = [];
     foreach ($published_alert_banners as $alert_banner) {
-      $build['#banners'][] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
+      $rendered_banner = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
         ->view($alert_banner);
-      $banner_titles[] = $alert_banner->label();
+
+      // Group alert banners depending on if the banner should be persitently 
+      // displayed (nominally the hide link was disabled). 
+      // If so, place in the peristent banners area.
+      if ($alert_banner->hasField('remove_hide_link') && $alert_banner->remove_hide_link->value) {
+        $build['#persistent_banners'][] = $rendered_banner;
+      }
+
+      // Otherwise the banner should be in the collapsible section.
+      // Add the banner title so the summary of collapsed banners 
+      // can be generated.
+      else {
+        $build['#banners'][] = $rendered_banner;
+        $banner_titles[] = $alert_banner->label();
+      }
+      
     }
 
-    $build['#count'] = count($published_alert_banners);
+    $build['#count'] = count($build['#banners']);
     $build['#published_alert_banners'] = $published_alert_banners;
     $build['#banner_titles'] = $banner_titles;
     
+    // Summarise the banners based on the title.
     if (count($banner_titles) === 1) {
       $build['#summary'] = reset($banner_titles);
     }
