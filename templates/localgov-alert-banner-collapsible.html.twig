@@ -30,7 +30,7 @@
     <span>{{ count }} notifications: </span>
     <span>{{ summary }}</span>
     {{ control }}
-    <div class="localgov-alert-banner-collapsible-pane--content js-alert-banner-pane-content" id="{{ html_id }}--contents">
+    <div class="localgov-alert-banner-collapsible-pane--content js-alert-banner-pane-content{% if default_state == 0 %} hidden{% endif %}" id="{{ html_id }}--contents">
       {{ banners }}
     </div>
   </div>

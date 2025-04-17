@@ -16,13 +16,20 @@
           const contents = pane.querySelectorAll('.js-alert-banner-pane-content')[0];
           
           // Get current state.
-          let state = window.localStorage.getItem('localgovAlertBannerCollapsibleState');
+          let state = window.localStorage.getItem('localgovAlertBannerCollapsibleState') ?? drupalSettings.localgov_alert_banner_collapsible.default_state;
           
           // Hide if default closed.
           if (state == 0) {
             contents.classList.add('hidden');
             button.setAttribute('aria-expanded', 'false');
             button.textContent = button.dataset.closedLabel;
+          }
+
+          // Else set as open.
+          else {
+            contents.classList.remove('hidden');
+            button.setAttribute('aria-expanded', 'true');
+            button.textContent = button.dataset.openLabel;
           }
 
           // Remove the hide buttons is JS
