@@ -141,8 +141,8 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
 
     // Render the alert banners.
     $banner_titles = [];
-    $build['#persistent_banners'] = [];
-    $build['#banners'] = [];
+    $build['#persistent_alert_banners'] = [];
+    $build['#alert_banners'] = [];
     foreach ($published_alert_banners as $alert_banner) {
       $rendered_banner = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
         ->view($alert_banner);
@@ -151,22 +151,22 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
       // displayed (nominally the hide link was disabled).
       // If so, place in the peristent banners area.
       if ($alert_banner->hasField('remove_hide_link') && $alert_banner->remove_hide_link->value) {
-        $build['#persistent_banners'][] = $rendered_banner;
+        $build['#persistent_alert_banners'][] = $rendered_banner;
       }
 
       // Otherwise the banner should be in the collapsible section.
       // Add the banner title so the summary of collapsed banners
       // can be generated.
       else {
-        $build['#banners'][] = $rendered_banner;
+        $build['#alert_banners'][] = $rendered_banner;
         $banner_titles[] = $alert_banner->label();
       }
 
     }
 
-    $build['#count'] = count($build['#banners']);
+    $build['#count'] = count($build['#alert_banners']);
     $build['#published_alert_banners'] = $published_alert_banners;
-    $build['#banner_titles'] = $banner_titles;
+    $build['#alert_banner_titles'] = $banner_titles;
 
     // Summarise the banners based on the title.
     // Use the configured value to show a summary, which is the max number of

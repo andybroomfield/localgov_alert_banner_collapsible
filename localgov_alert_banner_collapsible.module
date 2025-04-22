@@ -13,15 +13,15 @@ function localgov_alert_banner_collapsible_theme(): array {
     'localgov_alert_banner_collapsible' => [
       'variables' => [
         'control' => NULL,
-        'banners' => NULL,
-        'persistent_banners' => NULL,
+        'alert_banners' => NULL,
+        'persistent_alert_banners' => NULL,
         'html_id' => NULL,
         'count' => NULL,
         'summary' => NULL,
         'closed_label' => NULL,
         'open_label' => NULL,
         'published_alert_banners' => NULL,
-        'banner_titles' => NULL,
+        'alert_banner_titles' => NULL,
         'default_state' => NULL,
       ],
     ],
