@@ -5,33 +5,35 @@
  *
  * Available variables:
  * - control: Collapsible alert banner control button.
- * - banners: Rendered alert banners.
- * - persistent_banners: Alert banners that should always be displayed.
+ * - alert_banners: Rendered alert banners.
+ * - persistent_alert_banners: Alert banners that should always be displayed.
  * - html_id: Helper html ID prefix.
  * - count: Number of alert banners being displayed.
  * - summary: Summary of alert banners.
  * - closed_label: Label to use when the collapsible pane is closed.
  * - open_label: Label to use when the collapsible pane is open.
  * - published_alert_banners: Array of alert banner entities.
- * - banner_titles: Array of alert banner titles.
+ * - alert_banner_titles: Array of alert banner titles in the collapsible block.
+ * - default_state: Indicator of the default state of the alert banner when no
+ *   action has been taken. 0 = closed, 1 = open.
  *
  * @see template_preprocess_localgov_alert_banner_collapsible()
  *
  * @ingroup themeable
  */
 #}
-{% if persistent_banners %}
+{% if persistent_alert_banners %}
   <div class="localgov-alert-banner-peristant-banners">
-    {{ persistent_banners }}
+    {{ persistent_alert_banners }}
   </div>
 {% endif %}
-{% if banners %}
+{% if alert_banners %}
   <div class="localgov-alert-banner-collapsible-pane js-alert-banner-pane" id="{{ html_id }}">
     <span>{{ count }} notifications: </span>
     <span>{{ summary }}</span>
     {{ control }}
     <div class="localgov-alert-banner-collapsible-pane--content js-alert-banner-pane-content{% if default_state == 0 %} hidden{% endif %}" id="{{ html_id }}--contents">
-      {{ banners }}
+      {{ alert_banners }}
     </div>
   </div>
 {% endif %}
