@@ -171,7 +171,7 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
     // Summarise the banners based on the title.
     // Use the configured value to show a summary, which is the max number of
     // titles that can be displayed, with x more added to the end.
-    $max_titles_before_summary = (int) $this->configuration['max_titles_before_summary'] ?? self::INITIAL_MAX_TITLES_BEFORE_SUMMARY;
+    $max_titles_before_summary = intval($this->configuration['max_titles_before_summary'] ?? self::INITIAL_MAX_TITLES_BEFORE_SUMMARY);
     if (count($banner_titles) === 1) {
       $build['#summary'] = reset($banner_titles);
     }
