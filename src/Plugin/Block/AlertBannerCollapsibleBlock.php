@@ -178,7 +178,7 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
     elseif (count($banner_titles) === 2 && $max_titles_before_summary >= 2) {
       $build['#summary'] = reset($banner_titles) . ' and ' . end($banner_titles);
     }
-    elseif (count($banner_titles) === $max_titles_before_summary) {
+    elseif (count($banner_titles) <= $max_titles_before_summary) {
       $build['#summary'] = implode(', ', array_slice($banner_titles, 0, -1)) . ' and ' . end($banner_titles);
     }
     else {
