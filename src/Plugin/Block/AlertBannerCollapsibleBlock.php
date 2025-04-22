@@ -22,6 +22,7 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
   const INITIAL_STATE = 0;
   const INITIAL_OPEN_LABEL = 'Hide alert banners';
   const INITIAL_CLOSED_LABEL = 'Show alert banners';
+  const INITIAL_MAX_TITLES_BEFORE_SUMMARY = 3;
 
   /**
    * {@inheritdoc}
@@ -61,6 +62,15 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
       '#title' => $this->t('Closed label'),
       '#description' => $this->t('Label to display for the button when alert banners are collapsed.'),
       '#default_value' => $this->configuration['closed_label'] ?? self::INITIAL_CLOSED_LABEL,
+    ];
+
+    // Max number of banners to show in summary.
+    $form['collapsible_options']['max_titles_before_summary'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Titles to display before before showing a summary.'),
+      '#description' => $this->t('Display banner titles as ... and x more after this numnber of banners.'),
+      '#default_value' => $this->configuration['max_titles_before_summary'] ?? self::INITIAL_MAX_TITLES_BEFORE_SUMMARY,
+      '#min' => 1,
     ];
 
     return $form;
@@ -159,17 +169,20 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
     $build['#banner_titles'] = $banner_titles;
 
     // Summarise the banners based on the title.
+    // Use the configured value to show a summary, which is the max number of
+    // titles that can be displayed, with x more added to the end.
+    $max_titles_before_summary = (int) $this->configuration['max_titles_before_summary'] ?? self::INITIAL_MAX_TITLES_BEFORE_SUMMARY;
     if (count($banner_titles) === 1) {
       $build['#summary'] = reset($banner_titles);
     }
-    elseif (count($banner_titles) === 2) {
+    elseif (count($banner_titles) === 2 && $max_titles_before_summary >= 2) {
       $build['#summary'] = reset($banner_titles) . ' and ' . end($banner_titles);
     }
-    elseif (count($banner_titles) <= 3) {
+    elseif (count($banner_titles) === $max_titles_before_summary) {
       $build['#summary'] = implode(', ', array_slice($banner_titles, 0, -1)) . ' and ' . end($banner_titles);
     }
     else {
-      $build['#summary'] = implode(', ', array_slice($banner_titles, 0, 2)) . ' and ' . count(array_slice($banner_titles, 2)) . ' more';
+      $build['#summary'] = implode(', ', array_slice($banner_titles, 0, $max_titles_before_summary)) . ' and ' . count(array_slice($banner_titles, $max_titles_before_summary)) . ' more';
     }
 
     return $build;
