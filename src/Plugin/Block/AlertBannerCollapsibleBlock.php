@@ -79,7 +79,7 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
   /**
    * {@inheritdoc}
    */
-  public function blockSubmit($form, FormStateInterface $form_state) {
+  public function blockSubmit($form, FormStateInterface $form_state): void {
     parent::blockSubmit($form, $form_state);
     foreach ($form_state->getValues()['collapsible_options'] as $key => $value) {
       $this->configuration[$key] = $value;
@@ -89,7 +89,7 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
   /**
    * {@inheritdoc}
    */
-  public function build() {
+  public function build(): array {
 
     $options = [
       'type' => $this->mapTypesConfigToQuery(),
