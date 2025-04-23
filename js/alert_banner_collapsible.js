@@ -1,5 +1,4 @@
 (function localgovAlertBannerCollapsibleScript(Drupal) {
-
   Drupal.behaviors.localgovAlertBannersCollapsible = {
     attach(context) {
       const alertBannerButtons = once(
@@ -10,14 +9,18 @@
 
       if (alertBannerButtons) {
         alertBannerButtons.forEach(function (button) {
-          
           // Get related elements.
           const pane = button.closest('.js-alert-banner-pane');
-          const contents = pane.querySelectorAll('.js-alert-banner-pane-content')[0];
-          
+          const contents = pane.querySelectorAll(
+            '.js-alert-banner-pane-content',
+          )[0];
+
           // Get current state.
-          let state = window.localStorage.getItem('localgovAlertBannerCollapsibleState') ?? drupalSettings.localgov_alert_banner_collapsible.default_state;
-          
+          let state =
+            window.localStorage.getItem(
+              'localgovAlertBannerCollapsibleState',
+            ) ?? drupalSettings.localgov_alert_banner_collapsible.default_state;
+
           // Hide if default closed.
           if (state == 0) {
             contents.classList.add('hidden');
@@ -34,7 +37,9 @@
 
           // Remove the hide buttons is JS
           // @todo move to PHP or template.
-          const hideButtons = contents.querySelectorAll('.js-localgov-alert-banner__close');
+          const hideButtons = contents.querySelectorAll(
+            '.js-localgov-alert-banner__close',
+          );
           hideButtons.forEach(function (hideButton) {
             hideButton.remove();
           });
@@ -53,14 +58,17 @@
             this.setAttribute('aria-expanded', state == 0 ? 'false' : 'true');
 
             // Set the label for the show / hide button.
-            this.textContent = state == 0 ? this.dataset.closedLabel: this.dataset.openLabel;
+            this.textContent =
+              state == 0 ? this.dataset.closedLabel : this.dataset.openLabel;
 
             // Set the state back to local storage.
-            window.localStorage.setItem('localgovAlertBannerCollapsibleState', state);
-
+            window.localStorage.setItem(
+              'localgovAlertBannerCollapsibleState',
+              state,
+            );
           });
         });
       }
-    }
-  }
+    },
+  };
 })(Drupal);
