@@ -16,13 +16,15 @@
           )[0];
 
           // Get current state.
-          let state =
+          let state = parseInt(
             window.localStorage.getItem(
               'localgovAlertBannerCollapsibleState',
-            ) ?? drupalSettings.localgov_alert_banner_collapsible.default_state;
+            ) ?? drupalSettings.localgov_alert_banner_collapsible.default_state,
+            10,
+          );
 
           // Hide if default closed.
-          if (state == 0) {
+          if (state === 0) {
             contents.classList.add('hidden');
             button.setAttribute('aria-expanded', 'false');
             button.textContent = button.dataset.closedLabel;
@@ -49,17 +51,17 @@
             e.preventDefault();
 
             // Toggle the state.
-            state = state == 1 ? 0 : 1;
+            state = state === 1 ? 0 : 1;
 
             // Toggle the content pane to show / hide.
             contents.classList.toggle('hidden');
 
             // Toggle the button aria-expanded attribute.
-            this.setAttribute('aria-expanded', state == 0 ? 'false' : 'true');
+            this.setAttribute('aria-expanded', state === 0 ? 'false' : 'true');
 
             // Set the label for the show / hide button.
             this.textContent =
-              state == 0 ? this.dataset.closedLabel : this.dataset.openLabel;
+              state === 0 ? this.dataset.closedLabel : this.dataset.openLabel;
 
             // Set the state back to local storage.
             window.localStorage.setItem(
