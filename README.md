@@ -1,4 +1,4 @@
-# LocalGovDrupal Alert banner collapsible
+# LocalGov Drupal Alert banner collapsible
 
 Adds a new collapsiple alert banner block so that alert banners can be collapsed and expanded instead of hidden, so it's possible to get them back again.
 
