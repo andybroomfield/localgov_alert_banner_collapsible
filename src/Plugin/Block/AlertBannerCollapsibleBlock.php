@@ -89,7 +89,7 @@ class AlertBannerCollapsibleBlock extends AlertBannerBlock {
   /**
    * {@inheritdoc}
    */
-  public function build(): array {
+  public function build(): ?array {
 
     $options = [
       'type' => $this->mapTypesConfigToQuery(),
