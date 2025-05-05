@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\Tests\localgov_alert_banner_collapsible\Functional;
 
 use Drupal\Tests\BrowserTestBase;
-use Drupal\block\Entity\Block;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -37,7 +36,7 @@ final class BlockDisplayTest extends BrowserTestBase {
   public function testBlockDisplays(): void {
     $admin_user = $this->drupalCreateUser(['administer blocks']);
     $this->drupalLogin($admin_user);
-    $block = $this->drupalPlaceBlock('localgov_alert_banner_collapsible');
+    $this->drupalPlaceBlock('localgov_alert_banner_collapsible');
     $this->drupalLogout();
 
     // Check hide link is shown when remove_hide_link is not set.
