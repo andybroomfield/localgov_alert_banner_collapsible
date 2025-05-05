@@ -1,0 +1,21 @@
+block.settings.localgov_alert_banner_collapsible:
+  type: block_settings
+  label: 'LocalGov alert banner collapsible settings'
+  mapping:
+    include_types:
+      type: sequence
+      label: 'Displayed alert types'
+      sequence:
+        type: string
+    default_state:
+      type: integer
+      label: 'Default state'
+    open_label:
+      type: string
+      label: 'Open label'
+    closed_label:
+      type: string
+      label: 'Closed label'
+    max_titles_before_summary:
+      type: integer
+      label: 'Titles to display before before showing a summary.'
